@@ -1,29 +1,21 @@
-package com.mnrc.sales.forecasting.mnrcsalesforecasting.model;
+package com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 /**
- * The type Product sales.
+ * The type Unit details.
  */
-@Document(collection = "productsales")
-public class ProductSales {
-    @Id
+public class UnitDetails {
     private String salesId;
-    @Field("CHANNEL")
     private String channel;
-    @Field("PRODUCT")
     private String product;
-    @Field("DAY")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate date;
-    @Field("UNITS")
     private double units;
+    private double uppers;
+    private double lowers;
 
     /**
      * Gets sales id.
@@ -115,14 +107,54 @@ public class ProductSales {
         this.units = units;
     }
 
+    /**
+     * Instantiates a new Unit details.
+     *
+     * @param channel the channel
+     * @param product the product
+     * @param date    the date
+     * @param units   the units
+     */
+    public UnitDetails(String channel, String product, LocalDate date, double units) {
+        this.channel = channel;
+        this.product = product;
+        this.date = date;
+        this.units = units;
+    }
+
+    /**
+     * Instantiates a new Unit details.
+     */
+    public UnitDetails() {
+
+    }
+
+    public double getUppers() {
+        return uppers;
+    }
+
+    public void setUppers(double uppers) {
+        this.uppers = uppers;
+    }
+
+    public double getLowers() {
+        return lowers;
+    }
+
+    public void setLowers(double lowers) {
+        this.lowers = lowers;
+    }
+
     @Override
     public String toString() {
-        return "ProductSales{" +
+        return "UnitDetails{" +
                 "salesId='" + salesId + '\'' +
                 ", channel='" + channel + '\'' +
                 ", product='" + product + '\'' +
                 ", date=" + date +
                 ", units=" + units +
+                ", uppers=" + uppers +
+                ", lowers=" + lowers +
                 '}';
     }
 }

@@ -4,11 +4,19 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+/**
+ * The type Mnrc sales forecasting application.
+ */
 @SpringBootApplication
 @EnableMongoRepositories
 public class MnrcSalesForecastingApplication {
 
-	public static void main(String[] args) {
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
+    public static void main(String[] args) {
 		SpringApplication.run(MnrcSalesForecastingApplication.class, args);
 	}
 

@@ -7,9 +7,13 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The type Product sales dal.
+ */
 @Repository
 public class ProductSalesDALImpl implements ProductSalesDAL {
 
@@ -17,7 +21,7 @@ public class ProductSalesDALImpl implements ProductSalesDAL {
     private MongoTemplate mongoTemplate;
 
     @Override
-    public List<ProductSales> findSalesByDateRange(Date startDate, Date endDate){
+    public List<ProductSales> findSalesByDateRange(LocalDate startDate, LocalDate endDate){
         Query query = new Query();
         query.addCriteria(Criteria.where("DAY").lte(endDate).gte(startDate));
       // query.addCriteria(Criteria.where("UNITS").lt(60).gt(2));

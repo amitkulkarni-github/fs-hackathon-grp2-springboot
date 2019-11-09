@@ -1,17 +1,30 @@
 package com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting.mapper;
 
-import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast.ForecastRequest;
-import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast.ProductSalesDetails;
+import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast.ArimaRequest;
+import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast.UnitSalesDetails;
 import com.workday.insights.timeseries.arima.struct.ArimaParams;
 import org.springframework.stereotype.Component;
 
+/**
+ * The type Forecast request mapper.
+ */
 @Component
 public class ForecastRequestMapper {
 
-    public ForecastRequest getArimaParams(String method, boolean isSeasonal, int seasonalFrequency, ProductSalesDetails salesDetails){
-        ForecastRequest forecastRequest = new ForecastRequest();
+    /**
+     * Get arima params arima request.
+     *
+     * @param method            the method
+     * @param isSeasonal        the is seasonal
+     * @param seasonalFrequency the seasonal frequency
+     * @param salesDetails      the sales details
+     * @return the arima request
+     */
+    public ArimaRequest getArimaParams(String method, boolean isSeasonal, int seasonalFrequency,
+                                       UnitSalesDetails salesDetails){
+        ArimaRequest arimaRequest = new ArimaRequest();
         ArimaParams params = null;
-        forecastRequest.setHistoryArray(salesDetails.getProductSalesList().stream().map(e -> e.getSales()).mapToDouble(Double::doubleValue).toArray());
+        arimaRequest.setHistoryArray(salesDetails.getHistoryUnitDetails().stream().map(e -> e.getUnits()).mapToDouble(Double::doubleValue).toArray());
         if(!isSeasonal){
             if("first-order".equalsIgnoreCase(method)){
                 params = new ArimaParams(1,0,0,0,0,0,0);
@@ -21,6 +34,8 @@ public class ForecastRequestMapper {
                 params = new ArimaParams(1,1,0,0,0,0,0);
             } else if("SES".equalsIgnoreCase(method)){
                 params = new ArimaParams(0,1,1,0,0,0,0);
+            } else if ("damped-trend-linear-exponential-smoothing".equalsIgnoreCase(method)){
+                params = new ArimaParams(1,1,2,0,0,0,0);
             }
         } else{
             if("first-order".equalsIgnoreCase(method)){
@@ -31,9 +46,11 @@ public class ForecastRequestMapper {
                 params = new ArimaParams(0,0,0,1,1,0,seasonalFrequency);  // m - monthly
             } else if("SES".equalsIgnoreCase(method)){
                 params = new ArimaParams(0,0,0,0,1,1,seasonalFrequency);  // m - monthly
+            } else if ("damped-trend-linear-exponential-smoothing".equalsIgnoreCase(method)){
+                params = new ArimaParams(0,0,0,1,1,2,seasonalFrequency);
             }
         }
-        forecastRequest.setArimaParams(params);
-        return forecastRequest;
+        arimaRequest.setArimaParams(params);
+        return arimaRequest;
     }
 }

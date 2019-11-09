@@ -1,62 +1,61 @@
 package com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast;
 
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+/**
+ * The type Forecast response.
+ */
 public class ForecastResponse {
-    private double forecastArray[];
-    private double uppers[];
-    private double lowers[];
-    private double rmse;
-    private double maxNormalizedVariance;
 
-    public double[] getForecastArray() {
-        return forecastArray;
+    private Map<String,List<UnitDetails>> forecastMap;
+    private List<UnitDetails> historyDetails;
+
+    /**
+     * Gets forecast map.
+     *
+     * @return the forecast map
+     */
+    public Map<String, List<UnitDetails>> getForecastMap() {
+        if(null == forecastMap){
+            forecastMap = new HashMap<>();
+        }
+        return forecastMap;
     }
 
-    public void setForecastArray(double[] forecastArray) {
-        this.forecastArray = forecastArray;
+    /**
+     * Sets forecast map.
+     *
+     * @param forecastMap the forecast map
+     */
+    public void setForecastMap(Map<String, List<UnitDetails>> forecastMap) {
+        this.forecastMap = forecastMap;
     }
 
-    public double[] getUppers() {
-        return uppers;
+    /**
+     * Gets history details.
+     *
+     * @return the history details
+     */
+    public List<UnitDetails> getHistoryDetails() {
+        return historyDetails;
     }
 
-    public void setUppers(double[] uppers) {
-        this.uppers = uppers;
-    }
-
-    public double[] getLowers() {
-        return lowers;
-    }
-
-    public void setLowers(double[] lowers) {
-        this.lowers = lowers;
-    }
-
-    public double getRmse() {
-        return rmse;
-    }
-
-    public void setRmse(double rmse) {
-        this.rmse = rmse;
-    }
-
-    public double getMaxNormalizedVariance() {
-        return maxNormalizedVariance;
-    }
-
-    public void setMaxNormalizedVariance(double maxNormalizedVariance) {
-        this.maxNormalizedVariance = maxNormalizedVariance;
+    /**
+     * Sets history details.
+     *
+     * @param historyDetails the history details
+     */
+    public void setHistoryDetails(List<UnitDetails> historyDetails) {
+        this.historyDetails = historyDetails;
     }
 
     @Override
     public String toString() {
         return "ForecastResponse{" +
-                "forecastArray=" + Arrays.toString(forecastArray) +
-                ", uppers=" + Arrays.toString(uppers) +
-                ", lowers=" + Arrays.toString(lowers) +
-                ", rmse=" + Double.toString(rmse) +
-                ", maxNormalizedVariance=" + maxNormalizedVariance +
+                "forecastMap=" + forecastMap +
+                ", historyDetails=" + historyDetails +
                 '}';
     }
 }

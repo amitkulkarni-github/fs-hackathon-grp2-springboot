@@ -3,28 +3,28 @@ package com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast;
 import java.util.List;
 
 /**
- * The type Product sales details.
+ * The type Unit sales details.
  */
-public class ProductSalesDetails {
-    private List<UnitDetails> historUnitDetails;
+public class UnitSalesDetails {
+    private List<UnitDetails> historyUnitDetails;
     private List<UnitDetails> forecastUnitDetails;
 
     /**
-     * Gets histor unit details.
+     * Gets history unit details.
      *
-     * @return the histor unit details
+     * @return the history unit details
      */
-    public List<UnitDetails> getHistorUnitDetails() {
-        return historUnitDetails;
+    public List<UnitDetails> getHistoryUnitDetails() {
+        return historyUnitDetails;
     }
 
     /**
-     * Sets histor unit details.
+     * Sets history unit details.
      *
-     * @param historUnitDetails the histor unit details
+     * @param historyUnitDetails the history unit details
      */
-    public void setHistorUnitDetails(List<UnitDetails> historUnitDetails) {
-        this.historUnitDetails = historUnitDetails;
+    public void setHistoryUnitDetails(List<UnitDetails> historyUnitDetails) {
+        this.historyUnitDetails = historyUnitDetails;
     }
 
     /**
@@ -48,7 +48,7 @@ public class ProductSalesDetails {
     @Override
     public String toString() {
         return "ProductSalesDetails{" +
-                "historUnitDetails=" + historUnitDetails +
+                "historUnitDetails=" + historyUnitDetails +
                 ", forecastUnitDetails=" + forecastUnitDetails +
                 '}';
     }
