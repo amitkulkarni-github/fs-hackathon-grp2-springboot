@@ -23,7 +23,8 @@ public class ProductSalesDALImpl implements ProductSalesDAL {
     @Override
     public List<ProductSales> findSalesByDateRange(LocalDate startDate, LocalDate endDate){
         Query query = new Query();
-        query.addCriteria(Criteria.where("DAY").lte(endDate).gte(startDate));
+        query.addCriteria(Criteria.where("day" +
+                "").lte(endDate).gte(startDate));
       // query.addCriteria(Criteria.where("UNITS").lt(60).gt(2));
         //query.limit(10);
         return mongoTemplate.find(query, ProductSales.class);

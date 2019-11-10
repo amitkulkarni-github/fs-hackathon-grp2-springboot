@@ -49,8 +49,8 @@ public class HistoryService {
         List<ProductSales> productSalesHistory = productSalesRepository.findSalesByDateRange(startDate, endDate);
         return productSalesHistory.stream().filter(Objects::nonNull).map(productSales -> {
             UnitDetails unitDetails = new UnitDetails();
-            unitDetails.setProduct(productSales.getProduct());
-            unitDetails.setChannel(productSales.getChannel());
+            unitDetails.setProduct(productSales.getProductId());
+            unitDetails.setChannel(productSales.getChannelId());
             unitDetails.setSalesId(productSales.getSalesId());
             unitDetails.setDate(productSales.getDate());
             unitDetails.setUnits(productSales.getUnits());

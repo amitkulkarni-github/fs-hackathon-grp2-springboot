@@ -12,9 +12,9 @@ public class Channel {
 
     @Id
     private String channelId;
-    @Field("CHANNEL")
+    @Field("name")
     private String channel;
-    @Field("DESCRIPTION")
+    @Field("description")
     private String description;
 
 

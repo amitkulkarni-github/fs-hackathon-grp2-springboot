@@ -11,18 +11,18 @@ import java.util.Date;
 /**
  * The type Product sales.
  */
-@Document(collection = "productsales")
+@Document(collection = "productSales")
 public class ProductSales {
     @Id
     private String salesId;
-    @Field("CHANNEL")
-    private String channel;
-    @Field("PRODUCT")
-    private String product;
-    @Field("DAY")
+    @Field("channel")
+    private String channelId;
+    @Field("product")
+    private String productId;
+    @Field("day")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate date;
-    @Field("UNITS")
+    @Field("units")
     private double units;
 
     /**
@@ -46,37 +46,37 @@ public class ProductSales {
     /**
      * Gets channel.
      *
-     * @return the channel
+     * @return the channelId
      */
-    public String getChannel() {
-        return channel;
+    public String getChannelId() {
+        return channelId;
     }
 
     /**
      * Sets channel.
      *
-     * @param channel the channel
+     * @param channelId the channel
      */
-    public void setChannel(String channel) {
-        this.channel = channel;
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
     }
 
     /**
-     * Gets product.
+     * Gets productId.
      *
-     * @return the product
+     * @return the productId
      */
-    public String getProduct() {
-        return product;
+    public String getProductId() {
+        return productId;
     }
 
     /**
      * Sets product.
      *
-     * @param product the product
+     * @param productId the product
      */
-    public void setProduct(String product) {
-        this.product = product;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     /**
@@ -119,8 +119,8 @@ public class ProductSales {
     public String toString() {
         return "ProductSales{" +
                 "salesId='" + salesId + '\'' +
-                ", channel='" + channel + '\'' +
-                ", product='" + product + '\'' +
+                ", channelId='" + channelId + '\'' +
+                ", productId='" + productId + '\'' +
                 ", date=" + date +
                 ", units=" + units +
                 '}';
