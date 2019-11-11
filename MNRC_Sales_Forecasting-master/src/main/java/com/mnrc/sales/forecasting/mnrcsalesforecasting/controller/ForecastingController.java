@@ -69,6 +69,7 @@ public class ForecastingController {
      */
     @RequestMapping(value = "/forecast", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @ResponseBody
     public ResponseEntity<ForecastResponse> addResource(@RequestBody ForecastInput forecastInput) throws ForecastingException {
             forecastValidator.validateForecastRequest(forecastInput);
             return new ResponseEntity<ForecastResponse>(forecastProcessor.processInput(forecastInput), HttpStatus.OK);

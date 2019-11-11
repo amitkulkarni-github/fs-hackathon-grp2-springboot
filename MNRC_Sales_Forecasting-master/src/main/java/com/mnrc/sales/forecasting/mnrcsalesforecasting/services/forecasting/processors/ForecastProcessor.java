@@ -3,7 +3,7 @@ package com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting.pro
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast.ForecastInput;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast.ForecastResponse;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting.ForecastingService;
-import com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting.mock.ForecastDataCreator;
+import com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting.data.HistoryDataRetriever;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class ForecastProcessor {
      * The Forecast data creator.
      */
     @Autowired
-    ForecastDataCreator forecastDataCreator;
+    HistoryDataRetriever historyDataRetriever;
 
     /**
      * The Forecasting service.
@@ -35,7 +35,7 @@ public class ForecastProcessor {
      * @throws Exception the exception
      */
     public ForecastResponse processInput(ForecastInput forecastInput){
-        forecastDataCreator.getHistoryForecastDetails(forecastInput);
+        historyDataRetriever.getHistoryForecastDetails(forecastInput);
         ForecastResponse forecastResponse = new ForecastResponse();
         if(null != forecastInput.getMethod()){
             forecastResponse.getForecastMap().put(forecastInput.getMethod(),forecastingService.getForecastData(forecastInput));

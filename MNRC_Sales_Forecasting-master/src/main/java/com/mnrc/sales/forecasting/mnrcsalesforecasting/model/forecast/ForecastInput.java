@@ -3,12 +3,13 @@ package com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  * The type Forecast input.
  */
-public class ForecastInput {
+public class ForecastInput implements Serializable {
     private String method;
     private boolean isSeasonal;
     private int seasonalFrequency;
@@ -25,6 +26,24 @@ public class ForecastInput {
     private int daysAheadOfHistoryStartDate;
     private int forecastPeriod;
     private UnitSalesDetails unitSalesDetails;
+
+    public ForecastInput() {
+    }
+
+    public ForecastInput(String method, boolean isSeasonal, int seasonalFrequency, String channelId, String productId, LocalDate historyStartDate, LocalDate historyEndDate, LocalDate forecastStartDate, LocalDate forecastEndDate, int daysAheadOfHistoryStartDate, int forecastPeriod, UnitSalesDetails unitSalesDetails) {
+        this.method = method;
+        this.isSeasonal = isSeasonal;
+        this.seasonalFrequency = seasonalFrequency;
+        this.channelId = channelId;
+        this.productId = productId;
+        this.historyStartDate = historyStartDate;
+        this.historyEndDate = historyEndDate;
+        this.forecastStartDate = forecastStartDate;
+        this.forecastEndDate = forecastEndDate;
+        this.daysAheadOfHistoryStartDate = daysAheadOfHistoryStartDate;
+        this.forecastPeriod = forecastPeriod;
+        this.unitSalesDetails = unitSalesDetails;
+    }
 
     /**
      * Gets forecast period.
@@ -258,4 +277,5 @@ public class ForecastInput {
                 ", productSalesDetails=" + unitSalesDetails +
                 '}';
     }
+
 }

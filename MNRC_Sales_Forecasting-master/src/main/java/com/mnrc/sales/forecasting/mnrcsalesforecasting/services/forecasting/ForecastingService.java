@@ -29,6 +29,9 @@ public class ForecastingService {
     @Autowired
     ForecastResponseMapper forecastResponseMapper;
 
+    @Autowired
+    ArimaInvoker arimaInvoker;
+
     /**
      * Gets forecast data async.
      *
@@ -63,10 +66,9 @@ public class ForecastingService {
      * @return the arima response
      */
     public ArimaResponse processArimaForecast(ForecastInput forecastInput, ArimaRequest arimaRequest){
-        ForecastResult forecastResult = Arima.forecast_arima(arimaRequest.getHistoryArray(),
-                forecastInput.getForecastPeriod(), arimaRequest.getArimaParams());
+        ForecastResult forecastResult = arimaInvoker.getForecastResult(arimaRequest,forecastInput);
         ArimaResponse arimaResponse = new ArimaResponse();
-        arimaResponse.setForecastArray(forecastResult.getForecast());
+            arimaResponse.setForecastArray(forecastResult.getForecast());
         arimaResponse.setUppers(forecastResult.getForecastUpperConf());
         arimaResponse.setLowers(forecastResult.getForecastLowerConf());
         arimaResponse.setRmse(forecastResult.getRMSE());
