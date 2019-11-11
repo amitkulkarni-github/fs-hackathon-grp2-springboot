@@ -19,5 +19,5 @@ public interface ProductSalesDAL {
      * @param endDate   the end date
      * @return the list
      */
-    List<ProductSales> findSalesByDateRange(LocalDate startDate, LocalDate endDate);
+    List<ProductSales> findSalesByDateRange(LocalDate startDate, LocalDate endDate, String channelId, String productId);
 }

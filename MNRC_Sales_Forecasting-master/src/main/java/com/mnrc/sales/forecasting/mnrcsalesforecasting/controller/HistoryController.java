@@ -40,8 +40,11 @@ public class HistoryController {
     @RequestMapping(value = "/historysales", method = RequestMethod.GET)
     public ResponseEntity<List<ProductSales>> getSalesByDateRange(@RequestParam("startdate")
                                                                   @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-                                                                  @RequestParam("enddate")  @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+                                                                  @RequestParam("enddate")  @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
+                                                                  @RequestParam("channelId") String channelId,
+                                                                  @RequestParam("productId") String productId
+                                                                  ) {
         LOG.info("Getting history.");
-        return new ResponseEntity<List<ProductSales>>(historyService.getHistoryList(startDate,endDate), HttpStatus.OK);
+        return new ResponseEntity<List<ProductSales>>(historyService.getHistoryList(startDate,endDate,channelId, productId), HttpStatus.OK);
     }
 }

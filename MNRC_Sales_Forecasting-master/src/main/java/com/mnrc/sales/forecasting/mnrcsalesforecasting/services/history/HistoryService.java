@@ -33,8 +33,8 @@ public class HistoryService {
      * @param endDate   the end date
      * @return the list
      */
-    public List<ProductSales> getHistoryList(LocalDate startDate, LocalDate endDate){
-        List<ProductSales> productSalesHistory = productSalesRepository.findSalesByDateRange(startDate, endDate);
+    public List<ProductSales> getHistoryList(LocalDate startDate, LocalDate endDate, String channelId, String productId){
+        List<ProductSales> productSalesHistory = productSalesRepository.findSalesByDateRange(startDate, endDate, channelId, productId);
         return productSalesHistory;
     }
 
@@ -45,8 +45,8 @@ public class HistoryService {
      * @param endDate   the end date
      * @return the list
      */
-    public List<UnitDetails> getUnitSalesDetails(LocalDate startDate, LocalDate endDate){
-        List<ProductSales> productSalesHistory = productSalesRepository.findSalesByDateRange(startDate, endDate);
+    public List<UnitDetails> getUnitSalesDetails(LocalDate startDate, LocalDate endDate, String channelId, String productId){
+        List<ProductSales> productSalesHistory = productSalesRepository.findSalesByDateRange(startDate, endDate, channelId, productId);
         return productSalesHistory.stream().filter(Objects::nonNull).map(productSales -> {
             UnitDetails unitDetails = new UnitDetails();
             unitDetails.setProduct(productSales.getProductId());
