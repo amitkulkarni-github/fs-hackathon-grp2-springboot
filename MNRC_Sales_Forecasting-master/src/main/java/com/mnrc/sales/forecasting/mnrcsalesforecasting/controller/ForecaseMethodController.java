@@ -7,6 +7,8 @@ import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.repo.ForecastMethod
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,8 +23,8 @@ public class ForecaseMethodController {
     ForecastMethodRepository forecastMethodRepository;
 
     @RequestMapping(value = "/forecastMethods", method = RequestMethod.GET)
-    public List<ForecastMethod> getAllForecastMethods() {
+    public ResponseEntity<List<ForecastMethod>> getAllForecastMethods() {
         LOG.info("Getting all Forecast methods.");
-        return forecastMethodRepository.findAll();
+        return new ResponseEntity<List<ForecastMethod>>(forecastMethodRepository.findAll(), HttpStatus.OK);
     }
 }
