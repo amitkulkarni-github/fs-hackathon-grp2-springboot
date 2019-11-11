@@ -73,7 +73,7 @@ public class ForecastDataCreator {
             }
             unitSalesDetails.setHistoryUnitDetails(datalist);
         }else{
-            List<UnitDetails> datalist = historyService.getUnitSalesDetails(forecastInput.getHistoryStartDate(),forecastInput.getHistoryEndDate(),forecastInput.getChannel(), forecastInput.getProduct());
+            List<UnitDetails> datalist = historyService.getUnitSalesDetails(forecastInput.getHistoryStartDate(),forecastInput.getHistoryEndDate(),forecastInput.getChannelId(), forecastInput.getProductId());
             unitSalesDetails.setHistoryUnitDetails(datalist);
         }
     }

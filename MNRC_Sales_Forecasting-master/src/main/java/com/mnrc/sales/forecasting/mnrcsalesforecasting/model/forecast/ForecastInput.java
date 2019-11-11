@@ -12,8 +12,8 @@ public class ForecastInput {
     private String method;
     private boolean isSeasonal;
     private int seasonalFrequency;
-    private String channel;
-    private String product;
+    private String channelId;
+    private String productId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate historyStartDate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -135,39 +135,39 @@ public class ForecastInput {
     }
 
     /**
-     * Gets channel.
+     * Gets channelId.
      *
-     * @return the channel
+     * @return the channelId
      */
-    public String getChannel() {
-        return channel;
+    public String getChannelId() {
+        return channelId;
     }
 
     /**
-     * Sets channel.
+     * Sets channelId.
      *
-     * @param channel the channel
+     * @param channelId the channelId
      */
-    public void setChannel(String channel) {
-        this.channel = channel;
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
     }
 
     /**
-     * Gets product.
+     * Gets productId.
      *
-     * @return the product
+     * @return the productId
      */
-    public String getProduct() {
-        return product;
+    public String getProductId() {
+        return productId;
     }
 
     /**
-     * Sets product.
+     * Sets productId.
      *
-     * @param product the product
+     * @param productId the productId
      */
-    public void setProduct(String product) {
-        this.product = product;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     /**
@@ -248,8 +248,8 @@ public class ForecastInput {
                 "method='" + method + '\'' +
                 ", isSeasonal=" + isSeasonal +
                 ", seasonalFrequency=" + seasonalFrequency +
-                ", channel='" + channel + '\'' +
-                ", product='" + product + '\'' +
+                ", channelId='" + channelId + '\'' +
+                ", productId='" + productId + '\'' +
                 ", historyStartDate=" + historyStartDate +
                 ", historyEndDate=" + historyEndDate +
                 ", forecastStartDate=" + forecastStartDate +

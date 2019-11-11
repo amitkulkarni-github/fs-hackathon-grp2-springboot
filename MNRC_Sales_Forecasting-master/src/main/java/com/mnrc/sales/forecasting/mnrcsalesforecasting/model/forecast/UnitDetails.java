@@ -9,8 +9,8 @@ import java.time.LocalDate;
  */
 public class UnitDetails {
     private String salesId;
-    private String channel;
-    private String product;
+    private String channelId;
+    private String productId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate date;
     private double units;
@@ -40,17 +40,17 @@ public class UnitDetails {
      *
      * @return the channel
      */
-    public String getChannel() {
-        return channel;
+    public String getChannelId() {
+        return channelId;
     }
 
     /**
      * Sets channel.
      *
-     * @param channel the channel
+     * @param channelId the channel
      */
-    public void setChannel(String channel) {
-        this.channel = channel;
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
     }
 
     /**
@@ -58,17 +58,17 @@ public class UnitDetails {
      *
      * @return the product
      */
-    public String getProduct() {
-        return product;
+    public String getProductId() {
+        return productId;
     }
 
     /**
      * Sets product.
      *
-     * @param product the product
+     * @param productId the product
      */
-    public void setProduct(String product) {
-        this.product = product;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     /**
@@ -110,14 +110,14 @@ public class UnitDetails {
     /**
      * Instantiates a new Unit details.
      *
-     * @param channel the channel
-     * @param product the product
+     * @param channelId the channel
+     * @param productId the product
      * @param date    the date
      * @param units   the units
      */
-    public UnitDetails(String channel, String product, LocalDate date, double units) {
-        this.channel = channel;
-        this.product = product;
+    public UnitDetails(String channelId, String productId, LocalDate date, double units) {
+        this.channelId = channelId;
+        this.productId = productId;
         this.date = date;
         this.units = units;
     }
@@ -149,8 +149,8 @@ public class UnitDetails {
     public String toString() {
         return "UnitDetails{" +
                 "salesId='" + salesId + '\'' +
-                ", channel='" + channel + '\'' +
-                ", product='" + product + '\'' +
+                ", channel='" + channelId + '\'' +
+                ", product='" + productId + '\'' +
                 ", date=" + date +
                 ", units=" + units +
                 ", uppers=" + uppers +

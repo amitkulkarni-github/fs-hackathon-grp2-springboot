@@ -13,13 +13,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * The type Channel product controller.
+ */
 @RestController
 public class ChannelProductController {
     private final Logger LOG = LoggerFactory.getLogger(getClass());
 
+    /**
+     * The Channel product repository.
+     */
     @Autowired
     ChannelProductRepository channelProductRepository;
 
+    /**
+     * Gets all channel products.
+     *
+     * @return the all channel products
+     */
     @RequestMapping(value = "/channelProducts", method = RequestMethod.GET)
     public List<ChannelProduct> getAllChannelProducts() {
         LOG.info("Getting all Channels and Products.");

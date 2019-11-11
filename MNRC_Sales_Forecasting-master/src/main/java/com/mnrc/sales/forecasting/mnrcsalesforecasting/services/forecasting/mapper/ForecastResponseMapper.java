@@ -1,5 +1,6 @@
 package com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting.mapper;
 
+import com.mnrc.sales.forecasting.mnrcsalesforecasting.exception.ForecastingException;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast.*;
 import org.springframework.stereotype.Component;
 
@@ -9,7 +10,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
 
 /**
  * The type Forecast response mapper.
@@ -26,7 +26,7 @@ public class ForecastResponseMapper {
      * @throws Exception the exception
      */
     public List<UnitDetails> getArimaResponse(ArimaResponse arimaResponse,
-                                              ForecastInput forecastInput) throws Exception {
+                                              ForecastInput forecastInput) throws ForecastingException {
         List<UnitDetails> list = null;
         List<Double> forecastListFull = DoubleStream.of(arimaResponse.getForecastArray()).boxed().collect(Collectors.toList());
         List<Double> forcastList = new ArrayList<>();
@@ -35,7 +35,7 @@ public class ForecastResponseMapper {
                 forcastList.add(forecastListFull.get(i));
             }
         } else {
-            throw new Exception("Something is wrong");
+            throw new ForecastingException("Exception while generating Forecast values array");
         }
 
         List<Double> uppersListFull = DoubleStream.of(arimaResponse.getUppers()).boxed().collect(Collectors.toList());
@@ -45,7 +45,7 @@ public class ForecastResponseMapper {
                 uppersList.add(uppersListFull.get(i));
             }
         } else {
-            throw new Exception("Something is wrong");
+            throw new ForecastingException("Exception while generating Forecast values array");
         }
 
         List<Double> lowerListFull = DoubleStream.of(arimaResponse.getLowers()).boxed().collect(Collectors.toList());
@@ -55,7 +55,7 @@ public class ForecastResponseMapper {
                 lowerList.add(lowerListFull.get(i));
             }
         } else {
-            throw new Exception("Something is wrong");
+            throw new ForecastingException("Exception while generating Forecast values array");
         }
 
         if (null != arimaResponse) {
@@ -64,17 +64,15 @@ public class ForecastResponseMapper {
             LocalDate foreCastStartDate = start;
             AtomicInteger i = new AtomicInteger(1);
             AtomicInteger j = new AtomicInteger(0);
-            AtomicInteger k = new AtomicInteger(0);
             list = forcastList.stream().map(aDouble -> {
                 UnitDetails unitDetails = new UnitDetails();
                 unitDetails.setSalesId(Integer.toString(i.getAndIncrement()));
-                unitDetails.setUnits(aDouble);
-                unitDetails.setChannel(forecastInput.getChannel());
-                unitDetails.setProduct(forecastInput.getProduct());
-                unitDetails.setDate(foreCastStartDate);
-                unitDetails.setUppers(uppersList.get(j.getAndIncrement()));
-                unitDetails.setLowers(lowerList.get(k.getAndIncrement()));
-                foreCastStartDate.plusDays(1);
+                unitDetails.setUnits(Math.abs(aDouble));
+                unitDetails.setChannelId(forecastInput.getChannelId());
+                unitDetails.setProductId(forecastInput.getProductId());
+                unitDetails.setDate(foreCastStartDate.plusDays(j.get()));
+                unitDetails.setUppers(Math.abs(uppersList.get(j.get())));
+                unitDetails.setLowers(Math.abs(lowerList.get(j.getAndIncrement())));
                 return unitDetails;
             }).collect(Collectors.toList());
 

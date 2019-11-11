@@ -1,8 +1,10 @@
 package com.mnrc.sales.forecasting.mnrcsalesforecasting.controller;
 
+import com.mnrc.sales.forecasting.mnrcsalesforecasting.exception.ForecastingException;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast.ForecastInput;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast.ForecastResponse;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting.processors.ForecastProcessor;
+import com.mnrc.sales.forecasting.mnrcsalesforecasting.util.ForecastValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class ForecastingController {
     @Autowired
     ForecastProcessor forecastProcessor;
 
+    @Autowired
+    ForecastValidator forecastValidator;
     /**
      * This method needs the following inputs:
      * The below are mandatory inputs:
@@ -65,8 +69,8 @@ public class ForecastingController {
      */
     @RequestMapping(value = "/forecast", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<ForecastResponse> addResource(@RequestBody ForecastInput forecastInput) throws Exception {
-        return new ResponseEntity<ForecastResponse>(forecastProcessor.processInput(forecastInput), HttpStatus.OK);
+    public ResponseEntity<ForecastResponse> addResource(@RequestBody ForecastInput forecastInput) throws ForecastingException {
+            forecastValidator.validateForecastRequest(forecastInput);
+            return new ResponseEntity<ForecastResponse>(forecastProcessor.processInput(forecastInput), HttpStatus.OK);
     }
-
 }

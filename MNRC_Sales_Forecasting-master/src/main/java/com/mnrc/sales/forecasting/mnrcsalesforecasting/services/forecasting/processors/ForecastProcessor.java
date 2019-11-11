@@ -34,7 +34,7 @@ public class ForecastProcessor {
      * @return the forecast response
      * @throws Exception the exception
      */
-    public ForecastResponse processInput(ForecastInput forecastInput) throws Exception {
+    public ForecastResponse processInput(ForecastInput forecastInput){
         forecastDataCreator.getHistoryForecastDetails(forecastInput);
         ForecastResponse forecastResponse = new ForecastResponse();
         if(null != forecastInput.getMethod()){

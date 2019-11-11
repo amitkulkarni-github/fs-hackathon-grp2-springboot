@@ -41,7 +41,9 @@ public class ForecastingService {
      * @throws Exception the exception
      */
 //Async
-    public CompletableFuture<Boolean> getForecastDataAsync(ForecastInput forecastInput, ForecastResponse forecastResponse,String forecastMethod, boolean isSeasonal, int seasonalFrequency) throws Exception {
+    public CompletableFuture<Boolean> getForecastDataAsync(ForecastInput forecastInput,
+                                                           ForecastResponse forecastResponse,String forecastMethod, boolean isSeasonal,
+                                                           int seasonalFrequency) {
         ArimaRequest arimaRequest = forecastRequestMapper.getArimaParams(forecastMethod,
                 isSeasonal,seasonalFrequency,forecastInput.getUnitSalesDetails());
         if(isSeasonal) {
@@ -81,7 +83,7 @@ public class ForecastingService {
      * @throws Exception the exception
      */
 //Non Async
-    public List<UnitDetails> getForecastData(ForecastInput forecastInput) throws Exception {
+    public List<UnitDetails> getForecastData(ForecastInput forecastInput) {
         ArimaRequest arimaRequest = forecastRequestMapper.getArimaParams(forecastInput.getMethod(),
                 forecastInput.isSeasonal(),forecastInput.getSeasonalFrequency(),forecastInput.getUnitSalesDetails());
         ArimaResponse arimaResponse = processArimaForecast(forecastInput,arimaRequest);
