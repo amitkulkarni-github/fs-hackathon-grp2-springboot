@@ -10,11 +10,9 @@ import java.time.LocalDate;
 
 import static org.junit.Assert.*;
 
-@SpringBootTest
 public class ForecastValidatorTest {
 
-    @Autowired
-    ForecastValidator forecastValidator;
+    ForecastValidator forecastValidator = new ForecastValidator();
 
     @Test(expected = ForecastingException.class)
     public void validateForecastRequest_V001() {
@@ -28,7 +26,7 @@ public class ForecastValidatorTest {
     public void validateForecastRequest_V002() {
         ForecastInput forecastInput  = new ForecastInput();
         forecastInput.setHistoryStartDate(LocalDate.parse("2018-01-01"));
-        forecastInput.setHistoryEndDate(LocalDate.parse("2019-01-01"));
+        forecastInput.setHistoryEndDate(LocalDate.parse("2018-01-01"));
         forecastValidator.validateForecastRequest(forecastInput);
     }
 }

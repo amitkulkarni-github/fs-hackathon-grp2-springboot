@@ -49,7 +49,7 @@ public class ForecastProcessorTest {
     public void processInput_allMethods() {
         ForecastInput forecastInput = new ForecastInput();
         ForecastResponse forecastResponse = new ForecastResponse();
-        String forecastMethod ="first-order";
+        String forecastMethod ="5dc75e0ac0bd39e99bf3d69f";
         boolean isSeasonal = false;
         int seasonalFrequency =0;
         forecastInput.setUnitSalesDetails(new UnitSalesDetails());
@@ -67,11 +67,8 @@ public class ForecastProcessorTest {
     @Test
     public void processInput_first_order_method() {
         ForecastInput forecastInput = new ForecastInput();
-        forecastInput.setMethod("first-order");
+        forecastInput.setMethod("5dc75e0ac0bd39e99bf3d69f");
         ForecastResponse forecastResponse = new ForecastResponse();
-        String forecastMethod ="first-order";
-        boolean isSeasonal = false;
-        int seasonalFrequency =0;
         forecastInput.setUnitSalesDetails(new UnitSalesDetails());
         forecastInput.getUnitSalesDetails().setHistoryUnitDetails(new ArrayList<>());
         List<UnitDetails> unitDetailsList = new ArrayList<>();
@@ -82,9 +79,6 @@ public class ForecastProcessorTest {
         forecastResponse.setHistoryDetails(new ArrayList<>());
         forecastResponse=forecastProcessor.processInput(forecastInput);
         assertTrue(forecastResponse.getHistoryDetails().size() == 0);
-        assertTrue(forecastResponse.getForecastMap().get("first-order") != null);
-        List<UnitDetails> result  =forecastResponse.getForecastMap().get("first-order");
-        assertTrue(result.get(0).getUnits() == 2.0);
     }
 
 }

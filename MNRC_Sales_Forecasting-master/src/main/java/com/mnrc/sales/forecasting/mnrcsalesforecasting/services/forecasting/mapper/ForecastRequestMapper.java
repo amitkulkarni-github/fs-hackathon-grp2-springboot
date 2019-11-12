@@ -26,27 +26,27 @@ public class ForecastRequestMapper {
         ArimaParams params = null;
         arimaRequest.setHistoryArray(salesDetails.getHistoryUnitDetails().stream().map(e -> e.getUnits()).mapToDouble(Double::doubleValue).toArray());
         if(!isSeasonal){
-            if("first-order".equalsIgnoreCase(method)){
+            if("5dc75e0ac0bd39e99bf3d69f".equalsIgnoreCase(method)){  //first-order
                 params = new ArimaParams(1,0,0,0,0,0,0);
             } else if("random-walk".equalsIgnoreCase(method)){
                 throw new UnsupportedOperationException("Not implemented");
-            }else if ("differenced-first-order".equalsIgnoreCase(method)){
+            }else if ("5dc75e0ac0bd39e99bf3d69b".equalsIgnoreCase(method)){  //differenced-first-order
                 params = new ArimaParams(1,1,0,0,0,0,0);
-            } else if("SES".equalsIgnoreCase(method)){
+            } else if("5dc75e0ac0bd39e99bf3d699".equalsIgnoreCase(method)){  //SES
                 params = new ArimaParams(0,1,1,0,0,0,0);
-            } else if ("damped-trend-linear-exponential-smoothing".equalsIgnoreCase(method)){
+            } else if ("5dc75e0ac0bd39e99bf3d69d".equalsIgnoreCase(method)){ //damped-trend-linear-exponential-smoothing
                 params = new ArimaParams(1,1,2,0,0,0,0);
             }
         } else{
-            if("first-order".equalsIgnoreCase(method)){
+            if("5dca45b5ba26446724ed00ed".equalsIgnoreCase(method)){ //first-order
                 params = new ArimaParams(0,0,0,1,0,0,seasonalFrequency);  // m - monthly
             } else if("random-walk".equalsIgnoreCase(method)){
                 throw new UnsupportedOperationException("Not implemented");
-            }else if ("differenced-first-order".equalsIgnoreCase(method)){
+            }else if ("5dca4586ba26446724ed00ec".equalsIgnoreCase(method)){ //differenced-first-order
                 params = new ArimaParams(0,0,0,1,1,0,seasonalFrequency);  // m - monthly
-            } else if("SES".equalsIgnoreCase(method)){
+            } else if("5dca4554ba26446724ed00eb".equalsIgnoreCase(method)){  //SES
                 params = new ArimaParams(0,0,0,0,1,1,seasonalFrequency);  // m - monthly
-            } else if ("damped-trend-linear-exponential-smoothing".equalsIgnoreCase(method)){
+            } else if ("5dca45cfba26446724ed00ee".equalsIgnoreCase(method)){ //damped-trend-linear-exponential-smoothing
                 params = new ArimaParams(0,0,0,1,1,2,seasonalFrequency);
             }
         }

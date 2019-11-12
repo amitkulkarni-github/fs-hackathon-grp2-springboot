@@ -8,16 +8,22 @@ import com.mnrc.sales.forecasting.mnrcsalesforecasting.util.ForecastValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 /**
  * The type Forecasting controller.
  */
+@CrossOrigin(maxAge = 3600)
 @RestController
 public class ForecastingController {
 
@@ -31,6 +37,8 @@ public class ForecastingController {
 
     @Autowired
     ForecastValidator forecastValidator;
+
+
     /**
      * This method needs the following inputs:
      * The below are mandatory inputs:

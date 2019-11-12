@@ -1,5 +1,8 @@
 package com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,8 +12,18 @@ import java.util.Map;
  */
 public class ForecastResponse {
 
+    @JsonIgnore
     private Map<String,List<UnitDetails>> forecastMap;
+    private List<Forecast> forecast = new ArrayList<>();
     private List<UnitDetails> historyDetails;
+
+    public List<Forecast> getForecast() {
+        return forecast;
+    }
+
+    public void setForecast(List<Forecast> forecast) {
+        this.forecast = forecast;
+    }
 
     /**
      * Gets forecast map.

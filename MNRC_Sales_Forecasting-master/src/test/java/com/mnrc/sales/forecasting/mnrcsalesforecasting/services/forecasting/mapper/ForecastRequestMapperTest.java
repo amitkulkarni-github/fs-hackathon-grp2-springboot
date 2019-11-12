@@ -25,7 +25,7 @@ public class ForecastRequestMapperTest {
 
     @Test
     public void getArimaParams() {
-        String method = "first-order";
+        String method = "5dc75e0ac0bd39e99bf3d69f";
         boolean isSeasonal = false;
         int seasonalFrequency = 0;
         UnitSalesDetails salesDetails = new UnitSalesDetails();
@@ -43,21 +43,21 @@ public class ForecastRequestMapperTest {
         } catch (Exception e) {
             assertTrue(e instanceof UnsupportedOperationException);
         }
-        method = "differenced-first-order";
+        method = "5dc75e0ac0bd39e99bf3d69b";
         arimaRequest = forecastRequestMapper.getArimaParams(method, isSeasonal, seasonalFrequency, salesDetails);
         assertNotNull(arimaRequest);
         assertNotNull(arimaRequest.getArimaParams());
-        method = "SES";
-        arimaRequest = forecastRequestMapper.getArimaParams(method, isSeasonal, seasonalFrequency, salesDetails);
-        assertNotNull(arimaRequest);
-        assertNotNull(arimaRequest.getArimaParams());
-
-        method ="damped-trend-linear-exponential-smoothing";
+        method = "5dc75e0ac0bd39e99bf3d699";
         arimaRequest = forecastRequestMapper.getArimaParams(method, isSeasonal, seasonalFrequency, salesDetails);
         assertNotNull(arimaRequest);
         assertNotNull(arimaRequest.getArimaParams());
 
-        method = "first-order";
+        method ="5dc75e0ac0bd39e99bf3d69d";
+        arimaRequest = forecastRequestMapper.getArimaParams(method, isSeasonal, seasonalFrequency, salesDetails);
+        assertNotNull(arimaRequest);
+        assertNotNull(arimaRequest.getArimaParams());
+
+        method = "5dca45b5ba26446724ed00ed";
         isSeasonal = true;
         seasonalFrequency=1;
         arimaRequest = forecastRequestMapper.getArimaParams(method, isSeasonal, seasonalFrequency, salesDetails);
@@ -74,20 +74,20 @@ public class ForecastRequestMapperTest {
             assertTrue(e instanceof UnsupportedOperationException);
         }
 
-        method = "differenced-first-order";
+        method = "5dca4586ba26446724ed00ec";
         isSeasonal = true;
         seasonalFrequency=1;
         arimaRequest = forecastRequestMapper.getArimaParams(method, isSeasonal, seasonalFrequency, salesDetails);
         assertNotNull(arimaRequest);
         assertNotNull(arimaRequest.getArimaParams());
-        method = "SES";
+        method = "5dca4554ba26446724ed00eb";
         isSeasonal = true;
         seasonalFrequency=1;
         arimaRequest = forecastRequestMapper.getArimaParams(method, isSeasonal, seasonalFrequency, salesDetails);
         assertNotNull(arimaRequest);
         assertNotNull(arimaRequest.getArimaParams());
 
-        method ="damped-trend-linear-exponential-smoothing";
+        method ="5dca45cfba26446724ed00ee";
         isSeasonal = true;
         seasonalFrequency=1;
         arimaRequest = forecastRequestMapper.getArimaParams(method, isSeasonal, seasonalFrequency, salesDetails);

@@ -61,7 +61,7 @@ public class ForecastingServiceTest {
 
         ForecastInput forecastInput = new ForecastInput();
         forecastInput.setForecastPeriod(2);
-        forecastInput.setMethod("first-order");
+        forecastInput.setMethod("5dc75e0ac0bd39e99bf3d69f");
         forecastInput.setSeasonal(true);
         forecastInput.setSeasonalFrequency(1);
         ForecastResponse forecastResponse = new ForecastResponse();
@@ -84,9 +84,9 @@ public class ForecastingServiceTest {
         unitDetails1.setUnits(1.0);
         unitDetails.add(unitDetails1);
         Mockito.when(forecastResponseMapper.getArimaResponse(Mockito.any(ArimaResponse.class), Mockito.any(ForecastInput.class))).thenReturn(unitDetails);
-        CompletableFuture<Boolean> cp = forecastingService.getForecastDataAsync(forecastInput,forecastResponse,"first-order",false,0);
+        CompletableFuture<Boolean> cp = forecastingService.getForecastDataAsync(forecastInput,forecastResponse,"5dc75e0ac0bd39e99bf3d69f",false,0);
         assertTrue(cp.get());
-        CompletableFuture<Boolean> cp1 = forecastingService.getForecastDataAsync(forecastInput,forecastResponse,"first-order",true,1);
+        CompletableFuture<Boolean> cp1 = forecastingService.getForecastDataAsync(forecastInput,forecastResponse,"5dc75e0ac0bd39e99bf3d69f",true,1);
         assertTrue(cp1.get());
     }
 
@@ -94,7 +94,7 @@ public class ForecastingServiceTest {
     public void getForecastData() throws ExecutionException, InterruptedException {
         ForecastInput forecastInput = new ForecastInput();
         forecastInput.setForecastPeriod(2);
-        forecastInput.setMethod("first-order");
+        forecastInput.setMethod("5dc75e0ac0bd39e99bf3d69f");
         forecastInput.setSeasonal(true);
         forecastInput.setSeasonalFrequency(1);
         ForecastResponse forecastResponse = new ForecastResponse();

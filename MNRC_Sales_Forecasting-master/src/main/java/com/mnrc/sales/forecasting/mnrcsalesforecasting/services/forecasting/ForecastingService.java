@@ -50,9 +50,15 @@ public class ForecastingService {
         ArimaRequest arimaRequest = forecastRequestMapper.getArimaParams(forecastMethod,
                 isSeasonal,seasonalFrequency,forecastInput.getUnitSalesDetails());
         if(isSeasonal) {
-            forecastResponse.getForecastMap().put(forecastMethod, forecastResponseMapper.getArimaResponse(processArimaForecast(forecastInput, arimaRequest), forecastInput));
+            Forecast forecast = new Forecast();
+            forecast.setMethodName(forecastMethod);
+            forecast.setData(forecastResponseMapper.getArimaResponse(processArimaForecast(forecastInput, arimaRequest), forecastInput));
+            forecastResponse.getForecast().add(forecast);
         } else{
-            forecastResponse.getForecastMap().put(forecastMethod+"-seasonal", forecastResponseMapper.getArimaResponse(processArimaForecast(forecastInput, arimaRequest), forecastInput));
+            Forecast forecast = new Forecast();
+            forecast.setMethodName(forecastMethod+"-seasonal");
+            forecast.setData(forecastResponseMapper.getArimaResponse(processArimaForecast(forecastInput, arimaRequest), forecastInput));
+            forecastResponse.getForecast().add(forecast);
         }
         return CompletableFuture.completedFuture(true);
     }
@@ -73,7 +79,6 @@ public class ForecastingService {
         arimaResponse.setLowers(forecastResult.getForecastLowerConf());
         arimaResponse.setRmse(forecastResult.getRMSE());
         arimaResponse.setMaxNormalizedVariance(forecastResult.getMaxNormalizedVariance());
-        System.out.println("Arima Response: "+ arimaResponse.toString());
         return arimaResponse;
     }
 
