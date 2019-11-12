@@ -1,27 +1,26 @@
 package com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Forecast {
 
-    private String methodName;
+    private String methodId;
     private List<UnitDetails> data;
 
-    public Forecast(String methodName, List<UnitDetails> data) {
-        this.methodName = methodName;
+    public Forecast(String methodId, List<UnitDetails> data) {
+        this.methodId = methodId;
         this.data = data;
     }
 
     public Forecast() {
     }
 
-    public String getMethodName() {
-        return methodName;
+    public String getMethodId() {
+        return methodId;
     }
 
-    public void setMethodName(String methodName) {
-        this.methodName = methodName;
+    public void setMethodId(String methodId) {
+        this.methodId = methodId;
     }
 
     public List<UnitDetails> getData() {

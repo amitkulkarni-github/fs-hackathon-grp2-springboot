@@ -59,7 +59,7 @@ public class ForecastProcessorTest {
             forecastResponse.getHistoryDetails().add(new UnitDetails());
             return true;
         });
-        Mockito.when(forecastingService.getForecastDataAsync(Mockito.any(ForecastInput.class),Mockito.any(ForecastResponse.class),Mockito.anyString(), Mockito.anyBoolean(),Mockito.anyInt())).thenReturn(compFuture);
+        Mockito.when(forecastingService.getForecastDataAsync(Mockito.any(ForecastInput.class),Mockito.any(ForecastResponse.class),Mockito.anyString(), Mockito.anyString(),Mockito.anyBoolean(),Mockito.anyInt())).thenReturn(compFuture);
         forecastProcessor.processInput(forecastInput);
         assertTrue(forecastResponse.getHistoryDetails().size() >0);
     }

@@ -1,5 +1,5 @@
 package com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting.processors;
-
+import static com.mnrc.sales.forecasting.mnrcsalesforecasting.util.ApplicationConstants.*;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast.Forecast;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast.ForecastInput;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast.ForecastResponse;
@@ -43,22 +43,37 @@ public class ForecastProcessor {
         ForecastResponse forecastResponse = new ForecastResponse();
         if(null != forecastInput.getMethod()){
             Forecast forecast = new Forecast();
-            forecast.setMethodName(forecastInput.getMethod());
+            forecast.setMethodId(forecastInput.getMethod());
             forecast.setData(forecastingService.getForecastData(forecastInput));
             List<Forecast> forecasts = new ArrayList<>();
             forecasts.add(forecast);
             forecastResponse.setForecast(forecasts);
         }
         else{
-            CompletableFuture<Boolean> firstOrder= forecastingService.getForecastDataAsync(forecastInput,forecastResponse,"5dc75e0ac0bd39e99bf3d69f",false, 0);
-            CompletableFuture<Boolean> differencedFirstOrder= forecastingService.getForecastDataAsync(forecastInput,forecastResponse,"5dc75e0ac0bd39e99bf3d69b",false, 0);
-            CompletableFuture<Boolean> ses= forecastingService.getForecastDataAsync(forecastInput,forecastResponse,"5dc75e0ac0bd39e99bf3d699",false, 0);
-            CompletableFuture<Boolean> dampedTrendLinearExponentialSmoothing= forecastingService.getForecastDataAsync(forecastInput,forecastResponse,"5dc75e0ac0bd39e99bf3d69d",false, 0);
+            CompletableFuture<Boolean> firstOrder= forecastingService.getForecastDataAsync(forecastInput,forecastResponse,
+                    FIRST_ORDER_ID, FIRST_ORDER_NAME, false, 0);
 
-            CompletableFuture<Boolean> firstOrderSeasonal= forecastingService.getForecastDataAsync(forecastInput,forecastResponse,"5dca45b5ba26446724ed00ed", true, 12);
-            CompletableFuture<Boolean> differencedFirstOrderSeasonal= forecastingService.getForecastDataAsync(forecastInput,forecastResponse,"5dca4586ba26446724ed00ec",true, 12);
-            CompletableFuture<Boolean> sesSeasonal= forecastingService.getForecastDataAsync(forecastInput,forecastResponse,"5dca4554ba26446724ed00eb",true, 12);
-            CompletableFuture<Boolean> dampedSeasonal= forecastingService.getForecastDataAsync(forecastInput,forecastResponse,"5dca45cfba26446724ed00ee",true, 12);
+            CompletableFuture<Boolean> differencedFirstOrder= forecastingService.getForecastDataAsync(forecastInput,forecastResponse,
+                    DIFFERENCED_FIRST_ORDER_ID, DIFFERENCED_FIRST_ORDER_NAME,false, 0);
+
+            CompletableFuture<Boolean> ses= forecastingService.getForecastDataAsync(forecastInput,forecastResponse,
+                    SES_ID,SES_NAME,false, 0);
+
+            CompletableFuture<Boolean> dampedTrendLinearExponentialSmoothing= forecastingService.getForecastDataAsync(forecastInput,forecastResponse,
+                    DTLES_ID,DTLES_NAME,false, 0);
+
+            CompletableFuture<Boolean> firstOrderSeasonal= forecastingService.getForecastDataAsync(forecastInput,forecastResponse,
+                    FIRST_ORDER_SEASONAL_ID, FIRST_ORDER_SEASONAL_NAME,true, 12);
+
+            CompletableFuture<Boolean> differencedFirstOrderSeasonal= forecastingService.getForecastDataAsync(forecastInput,forecastResponse,
+                    DIFFERENCED_FIRST_ORDER_SEASONAL_ID, DIFFERENCED_FIRST_ORDER_SEASONAL_NAME, true, 12);
+
+            CompletableFuture<Boolean> sesSeasonal= forecastingService.getForecastDataAsync(forecastInput,forecastResponse,
+                    SES_SEASONAL_ID, SES_SEASONAL_NAME, true, 12);
+
+            CompletableFuture<Boolean> dampedSeasonal= forecastingService.getForecastDataAsync(forecastInput,forecastResponse,
+                    DTLES_SEASONAL_ID,DTLES_SEASONAL_NAME,true, 12);
+
             CompletableFuture.allOf(firstOrder,differencedFirstOrder,ses,dampedTrendLinearExponentialSmoothing,firstOrderSeasonal,differencedFirstOrderSeasonal,sesSeasonal,dampedSeasonal).join();
         }
         forecastResponse.setHistoryDetails(forecastInput.getUnitSalesDetails().getHistoryUnitDetails());

@@ -3,8 +3,9 @@ package com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast.*;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting.mapper.ForecastRequestMapper;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting.mapper.ForecastResponseMapper;
-import com.workday.insights.timeseries.arima.Arima;
 import com.workday.insights.timeseries.arima.struct.ForecastResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,8 @@ import java.util.concurrent.CompletableFuture;
  */
 @Service("ForecastingService")
 public class ForecastingService {
+
+    private final Logger LOG = LoggerFactory.getLogger(getClass());
 
     /**
      * The Forecast request mapper.
@@ -45,18 +48,20 @@ public class ForecastingService {
      */
 //Async
     public CompletableFuture<Boolean> getForecastDataAsync(ForecastInput forecastInput,
-                                                           ForecastResponse forecastResponse,String forecastMethod, boolean isSeasonal,
+                                                           ForecastResponse forecastResponse,String forecastMethod, String forecastMethodName, boolean isSeasonal,
                                                            int seasonalFrequency) {
         ArimaRequest arimaRequest = forecastRequestMapper.getArimaParams(forecastMethod,
                 isSeasonal,seasonalFrequency,forecastInput.getUnitSalesDetails());
         if(isSeasonal) {
             Forecast forecast = new Forecast();
-            forecast.setMethodName(forecastMethod);
+            LOG.info("The forecast method Id: {} Method Name: {}",forecastMethod, forecastMethodName);
+            forecast.setMethodId(forecastMethod);
             forecast.setData(forecastResponseMapper.getArimaResponse(processArimaForecast(forecastInput, arimaRequest), forecastInput));
             forecastResponse.getForecast().add(forecast);
         } else{
             Forecast forecast = new Forecast();
-            forecast.setMethodName(forecastMethod+"-seasonal");
+            LOG.info("The forecast method Id: {} Method Name: {}",forecastMethod, forecastMethodName);
+            forecast.setMethodId(forecastMethod);
             forecast.setData(forecastResponseMapper.getArimaResponse(processArimaForecast(forecastInput, arimaRequest), forecastInput));
             forecastResponse.getForecast().add(forecast);
         }
