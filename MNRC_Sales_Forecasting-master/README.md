@@ -109,5 +109,5 @@ Deploying to Heroku
  - The app already has the below file to make sure we dont get error during startup
    - Procfile - This file contains **web: java $JAVA_OPTS -jar target/mnrc-sales-forecasting.jar -Dserver.port=$PORT $JAR_OPTS**
  - Command: **heroku logs --tail --app mnrc** for seeing the logs of the application
- - The application will be accessible from the https://<app>.herokuapp.com/<endpoints>
+ - The application will be accessible from the https://\<app\>.herokuapp.com/\<endpoints\>
   
