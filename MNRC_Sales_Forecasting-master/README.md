@@ -12,7 +12,7 @@ This is a Java Spring Boot Service open source. It provides services to get
 How to Use
 ---
 
-In order to use this service for forecasting data we need to input the below payload.
+In order to use this service for forecasting data we need to input the below payload for endpoint /forecast.
 
 {
   "channelId": "string",
@@ -72,6 +72,13 @@ mvn package
 // Install the package into the local repository, which can be used as a dependency in other projects locally.
 mvn install
 ```
+How to Deploy
+---
+
+Above generated jar file you can take it and run any server having JVM with below command
+
+java -jar mnrc-sales-forecasting-0.0.1-SNAPSHOT.jar
+
 
 Dependencies
 ---
@@ -79,7 +86,10 @@ Dependencies
 The library has the following dependencies:
 ```
 
-ARIMA Library from below location
+1) ARIMA Library from below location
 https://github.com/Workday/timeseries-forecast.git
+2) MONGO DB is Hosted on Database-as-a-Service by mLab
+
+
 
 ```
