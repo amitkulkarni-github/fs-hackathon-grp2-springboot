@@ -94,3 +94,20 @@ https://github.com/Workday/timeseries-forecast.git
 
 
 ```
+
+Deploying to Heroku
+----------------------
+ - All the controllers are annotated with @Crossorign
+ - Goto Command prompt in Windows machine
+ - Command : **mvn clean install** for getting the packaged jar
+ - Create a heroku login
+ - Command: **heroku login** from command prompt to login to Heroku CLI
+ - Command:  **heroku create mnrc** from command prompt to create an app
+ - Command:  **heroku plugins:install heroku-cli-deploy** from command prompt to enable command line deployment
+ - Copy the build jar for the mnrc application from /target in the app folder to **C:\target** 
+ - Command:   **heroku deploy:jar "C:\target\mnrc-sales-forecasting.jar" --app mnrc** from command prompt to deploy the application
+ - The app already has the below file to make sure we dont get error during startup
+   - Procfile - This file contains **web: java $JAVA_OPTS -jar target/mnrc-sales-forecasting.jar -Dserver.port=$PORT $JAR_OPTS**
+ - Command: **heroku logs --tail --app mnrc** for seeing the logs of the application
+ - The application will be accessible from the https://<app>.herokuapp.com/<endpoints>
+  
