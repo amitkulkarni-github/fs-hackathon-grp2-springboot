@@ -13,7 +13,8 @@ How to Use
 ---
 
 In order to use this service for forecasting data we need to input the below payload for endpoint /forecast.
-
+---
+```
 {
   "channelId": "string",
   "daysAheadOfHistoryStartDate": 0,
@@ -51,7 +52,7 @@ In order to use this service for forecasting data we need to input the below pay
     ]
   }
 }
-
+---
 How to Build
 ---
 This library uses Maven as its build tool.
