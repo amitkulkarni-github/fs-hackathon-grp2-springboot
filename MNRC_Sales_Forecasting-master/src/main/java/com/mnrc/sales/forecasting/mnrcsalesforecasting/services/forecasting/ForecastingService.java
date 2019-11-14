@@ -1,5 +1,6 @@
 package com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting;
 
+import com.mnrc.sales.forecasting.mnrcsalesforecasting.exception.ForecastingException;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast.*;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting.mapper.ForecastRequestMapper;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting.mapper.ForecastResponseMapper;
@@ -9,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -52,19 +55,17 @@ public class ForecastingService {
                                                            int seasonalFrequency) {
         ArimaRequest arimaRequest = forecastRequestMapper.getArimaParams(forecastMethod,
                 isSeasonal,seasonalFrequency,forecastInput.getUnitSalesDetails());
-        if(isSeasonal) {
-            Forecast forecast = new Forecast();
-            LOG.info("The forecast method Id: {} Method Name: {}",forecastMethod, forecastMethodName);
-            forecast.setMethodId(forecastMethod);
-            forecast.setData(forecastResponseMapper.getArimaResponse(processArimaForecast(forecastInput, arimaRequest), forecastInput));
-            forecastResponse.getForecast().add(forecast);
-        } else{
-            Forecast forecast = new Forecast();
-            LOG.info("The forecast method Id: {} Method Name: {}",forecastMethod, forecastMethodName);
-            forecast.setMethodId(forecastMethod);
-            forecast.setData(forecastResponseMapper.getArimaResponse(processArimaForecast(forecastInput, arimaRequest), forecastInput));
-            forecastResponse.getForecast().add(forecast);
+        LOG.info("The forecast method Id: {} Method Name: {}",forecastMethod, forecastMethodName);
+        Forecast forecast = new Forecast();
+        forecast.setMethodId(forecastMethod);
+        List<UnitDetails> unitDetailsList = null;
+        try {
+            unitDetailsList = forecastResponseMapper.getArimaResponse(processArimaForecast(forecastInput, arimaRequest), forecastInput);
+        }catch (ForecastingException e){
+            unitDetailsList = new ArrayList<>();
         }
+        forecast.setData(unitDetailsList);
+        forecastResponse.getForecast().add(forecast);
         return CompletableFuture.completedFuture(true);
     }
 
@@ -79,11 +80,13 @@ public class ForecastingService {
     public ArimaResponse processArimaForecast(ForecastInput forecastInput, ArimaRequest arimaRequest){
         ForecastResult forecastResult = arimaInvoker.getForecastResult(arimaRequest,forecastInput);
         ArimaResponse arimaResponse = new ArimaResponse();
+        if(Optional.of(forecastResult).isPresent()){
             arimaResponse.setForecastArray(forecastResult.getForecast());
-        arimaResponse.setUppers(forecastResult.getForecastUpperConf());
-        arimaResponse.setLowers(forecastResult.getForecastLowerConf());
-        arimaResponse.setRmse(forecastResult.getRMSE());
-        arimaResponse.setMaxNormalizedVariance(forecastResult.getMaxNormalizedVariance());
+            arimaResponse.setUppers(forecastResult.getForecastUpperConf());
+            arimaResponse.setLowers(forecastResult.getForecastLowerConf());
+            arimaResponse.setRmse(forecastResult.getRMSE());
+            arimaResponse.setMaxNormalizedVariance(forecastResult.getMaxNormalizedVariance());
+        }
         return arimaResponse;
     }
 

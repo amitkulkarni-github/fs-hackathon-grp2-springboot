@@ -2,6 +2,7 @@ package com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting.map
 
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.exception.ForecastingException;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast.*;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -18,6 +19,24 @@ import java.util.stream.DoubleStream;
 public class ForecastResponseMapper {
 
     /**
+     * getDataDoubleList
+     *
+     * @param doubleArray
+     * @param forecastInput
+     * @return
+     */
+    public List<Double> getDataDoubleList(double[] doubleArray, ForecastInput forecastInput){
+        List<Double> forecastListFull = DoubleStream.of(doubleArray).boxed().collect(Collectors.toList());
+        List<Double> forcastList = new ArrayList<>();
+        if (forecastListFull.size() > forecastInput.getDaysAheadOfHistoryStartDate()) {
+            for(int i=forecastInput.getDaysAheadOfHistoryStartDate(); i < forecastListFull.size(); i++){
+                forcastList.add(forecastListFull.get(i));
+            }
+        }
+        return forcastList;
+    }
+
+    /**
      * Gets arima response.
      *
      * @param arimaResponse the arima response
@@ -28,54 +47,34 @@ public class ForecastResponseMapper {
     public List<UnitDetails> getArimaResponse(ArimaResponse arimaResponse,
                                               ForecastInput forecastInput) throws ForecastingException {
         List<UnitDetails> list = null;
-        List<Double> forecastListFull = DoubleStream.of(arimaResponse.getForecastArray()).boxed().collect(Collectors.toList());
-        List<Double> forcastList = new ArrayList<>();
-        if (forecastListFull.size() > forecastInput.getDaysAheadOfHistoryStartDate()) {
-            for(int i=forecastInput.getDaysAheadOfHistoryStartDate(); i < forecastListFull.size(); i++){
-                forcastList.add(forecastListFull.get(i));
-            }
-        } else {
-            throw new ForecastingException("Exception while generating Forecast values array");
-        }
-
-        List<Double> uppersListFull = DoubleStream.of(arimaResponse.getUppers()).boxed().collect(Collectors.toList());
-        List<Double> uppersList = new ArrayList<>();
-        if (uppersListFull.size() > forecastInput.getDaysAheadOfHistoryStartDate()) {
-            for(int i=forecastInput.getDaysAheadOfHistoryStartDate(); i < uppersListFull.size(); i++){
-                uppersList.add(uppersListFull.get(i));
-            }
-        } else {
-            throw new ForecastingException("Exception while generating Forecast values array");
-        }
-
-        List<Double> lowerListFull = DoubleStream.of(arimaResponse.getLowers()).boxed().collect(Collectors.toList());
-        List<Double> lowerList = new ArrayList<>();
-        if (lowerListFull.size() > forecastInput.getDaysAheadOfHistoryStartDate()) {
-            for(int i=forecastInput.getDaysAheadOfHistoryStartDate(); i < lowerListFull.size(); i++){
-                lowerList.add(lowerListFull.get(i));
-            }
-        } else {
-            throw new ForecastingException("Exception while generating Forecast values array");
-        }
-
         if (null != arimaResponse) {
+            List<Double> forecastList = getDataDoubleList(arimaResponse.getForecastArray(),forecastInput);
+            List<Double> uppersList = getDataDoubleList(arimaResponse.getUppers(),forecastInput);
+            List<Double> lowerList = getDataDoubleList(arimaResponse.getLowers(),forecastInput);
+
             LocalDate start = forecastInput.getForecastStartDate();
             LocalDate stop = forecastInput.getForecastEndDate();
             LocalDate foreCastStartDate = start;
             AtomicInteger i = new AtomicInteger(1);
             AtomicInteger j = new AtomicInteger(0);
-            list = forcastList.stream().map(aDouble -> {
+            list = forecastList.stream().map(aDouble -> {
                 UnitDetails unitDetails = new UnitDetails();
                 unitDetails.setSalesId(Integer.toString(i.getAndIncrement()));
                 unitDetails.setUnits(Math.abs(aDouble));
                 unitDetails.setChannelId(forecastInput.getChannelId());
                 unitDetails.setProductId(forecastInput.getProductId());
-                unitDetails.setDate(foreCastStartDate.plusDays(j.get()));
-                unitDetails.setUppers(Math.abs(uppersList.get(j.get())));
-                unitDetails.setLowers(Math.abs(lowerList.get(j.getAndIncrement())));
+                if(CollectionUtils.isNotEmpty(uppersList)) {
+                    unitDetails.setUppers(Math.abs(uppersList.get(j.get())));
+                }
+                if(CollectionUtils.isNotEmpty(lowerList)) {
+                    unitDetails.setLowers(Math.abs(lowerList.get(j.get())));
+                }
+                unitDetails.setDate(foreCastStartDate.plusDays(j.getAndIncrement()));
                 return unitDetails;
             }).collect(Collectors.toList());
 
+        }else {
+            list = new ArrayList<>();
         }
         return list;
     }

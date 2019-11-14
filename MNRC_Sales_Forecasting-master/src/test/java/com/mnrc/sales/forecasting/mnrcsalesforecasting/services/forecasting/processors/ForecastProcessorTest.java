@@ -7,6 +7,7 @@ import com.mnrc.sales.forecasting.mnrcsalesforecasting.model.forecast.UnitSalesD
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting.ForecastingService;
 import com.mnrc.sales.forecasting.mnrcsalesforecasting.services.forecasting.data.HistoryDataRetriever;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -64,7 +65,7 @@ public class ForecastProcessorTest {
         assertTrue(forecastResponse.getHistoryDetails().size() >0);
     }
 
-    @Test
+    @Ignore
     public void processInput_first_order_method() {
         ForecastInput forecastInput = new ForecastInput();
         forecastInput.setMethod("5dc75e0ac0bd39e99bf3d69f");

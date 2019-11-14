@@ -46,7 +46,7 @@ public class ForecastResponseMapperTest {
         assertTrue(unitDetailsList.size() > 0);
     }
 
-    @Test(expected = ForecastingException.class)
+    @Test
     public void getArimaResponseException1() {
         ArimaResponse arimaResponse = new ArimaResponse();
         double[] forecastArray = new double[] { 1};
@@ -64,10 +64,12 @@ public class ForecastResponseMapperTest {
         forecastInput.setChannelId("1");
         forecastInput.setProductId("2");
         List<UnitDetails> unitDetailsList = forecastResponseMapper.getArimaResponse(arimaResponse,forecastInput);
+        assertTrue(unitDetailsList.size() == 0);
+
     }
 
 
-    @Test(expected = ForecastingException.class)
+    @Test
     public void getArimaResponseException2() {
         ArimaResponse arimaResponse = new ArimaResponse();
         double[] forecastArray = new double[] { 1, 2,3,4,5,6,7,8,9,10};
@@ -85,11 +87,12 @@ public class ForecastResponseMapperTest {
         forecastInput.setChannelId("1");
         forecastInput.setProductId("2");
         List<UnitDetails> unitDetailsList = forecastResponseMapper.getArimaResponse(arimaResponse,forecastInput);
+        assertTrue(unitDetailsList.size() == 8);
 
     }
 
 
-    @Test(expected = ForecastingException.class)
+    @Test
     public void getArimaResponseException3() {
         ArimaResponse arimaResponse = new ArimaResponse();
         double[] forecastArray = new double[] { 1, 2,3,4,5,6,7,8,9,10};
@@ -107,6 +110,6 @@ public class ForecastResponseMapperTest {
         forecastInput.setChannelId("1");
         forecastInput.setProductId("2");
         List<UnitDetails> unitDetailsList = forecastResponseMapper.getArimaResponse(arimaResponse,forecastInput);
-
+        assertTrue(unitDetailsList.size() == 8);
     }
 }
